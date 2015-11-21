@@ -24,7 +24,16 @@ export default class Category extends Component {
     }
 
     componentDidMount() {
+        this.fetchCategoryData();
+    }
+
+    componentDidUpdate() {
+        this.fetchCategoryData();
+    }
+
+    fetchCategoryData() {
         let {dispatch, selected, actions: {fetchCategory}} = this.props;
+        console.log(selected.url);
         dispatch(fetchCategory(selected.url));
     }
 
