@@ -16,7 +16,6 @@ class Navigation extends Component {
 
 
     componentDidMount() {
-
         this.navigator.navigationContext.addListener('didfocus', e => {
             let route = e.data.route
             this[route.name] && this[route.name].componentDidFocus && this[route.name].componentDidFocus()
@@ -28,11 +27,9 @@ class Navigation extends Component {
         this.router = this.router || new Router(navigator)
         if (route.component) {
             return React.createElement(route.component, Object.assign({}, route.props,
-                {
+                this.props, {
                     ref: view=>this[route.name] = view,
-                    actions: this.props.actions,
-                    state: this.props.state,
-                    router: this.router
+                    router: this.router,
                 }
             ))
         }

@@ -3,10 +3,13 @@
  */
 
 import { combineReducers } from 'redux';
+
 import drawerState from './DrawerReducer.js';
+import postsState from './PostsReducer.js';
 
 const rootReducer = combineReducers({
-    drawerState
+    drawerState,
+    postsState
 });
 
 export default rootReducer;

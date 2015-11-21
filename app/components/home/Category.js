@@ -1,19 +1,67 @@
 'use strict';
 
-import React from 'react-native';
-import Colors from '../../utilities/Colors';
-
-var {
+import React, {
     Component,
     StyleSheet,
+    ListView,
+    Dimensions,
+    ScrollView,
     View,
-    Text,
-    Image,
-    } = React;
+} from 'react-native';
+
+import Colors from '../../utilities/Colors';
+import ListItem from './ListItem';
+
+const DEVICE_HEIGHT = (Dimensions.get('window').height) - 60;
+
+export default class Category extends Component {
+
+    constructor(props) {
+        super(props);
+        this.dataSource = new ListView.DataSource({
+          rowHasChanged: (row1, row2) => row1 !== row2
+        });
+    }
+
+    componentDidMount() {
+        let {dispatch, selected, actions: {fetchCategory}} = this.props;
+        dispatch(fetchCategory(selected.url));
+    }
+
+    onEndReached() {
+
+    }
+
+    renderRow(post) {
+        return (<ListItem post={post} />)
+    }
+
+    render() {
+        let {postsState: {posts}} = this.props.state;
+        return (
+            <ScrollView style={styles.container}>
+                <ListView
+                    style={styles.navigationList}
+                    dataSource={this.dataSource.cloneWithRows(posts)}
+                    renderRow={this.renderRow}
+                    keyboardDismissMode="on-drag"
+                    keyboardShouldPersistTaps={true}
+                    showsVerticalScrollIndicator={false}
+                    onEndReached={this.onEndReached}
+                />
+            </ScrollView>
+        );
+    }
+
+}
 
 var styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: Colors.MainBackground
+    },
+    navigationList: {
+        height: DEVICE_HEIGHT
     },
     image: {
         height: 100,
@@ -21,21 +69,3 @@ var styles = StyleSheet.create({
         marginBottom: 20
     }
 });
-
-class Category extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text> Im the content </Text>
-            </View>
-        );
-    }
-
-}
-
-module.exports = Category;

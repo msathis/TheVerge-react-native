@@ -8,8 +8,7 @@ class Home extends Component {
     }
 
     render() {
-        const { root, dispatch, actions } = this.props;
-        return (<DrawerLayout actions={actions} state={root} />);
+        return (<DrawerLayout {...this.props} />);
     }
 }
 

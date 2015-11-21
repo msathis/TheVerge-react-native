@@ -27,10 +27,9 @@ import Colors from '../utilities/Colors';
 import Categories from '../constants/Categories';
 import Category from './home/Category';
 
-var DRAWER_WIDTH_LEFT =  require('Dimensions').get('window').width  / 4;
+var DRAWER_WIDTH_LEFT =  Dimensions.get('window').width  / 4;
 var DEVICE_HEIGHT = require('Dimensions').get('window').height;
 
-@connect(state => state)
 class DrawerLayout extends Component {
 
     constructor(props) {
@@ -44,16 +43,9 @@ class DrawerLayout extends Component {
     }
 
     componentDidUpdate() {
-        let {drawerState} = this.props;
+        let {drawerState} = this.props.state;
         if (drawerState.isDrawerOpen)
             this.drawer.openDrawer();
-    }
-
-    componentDidMount() {
-        let {selected} = this.state;
-        let {dispatch, actions: {fetchCategory}} = this.props;
-
-        dispatch(fetchCategory(selected.url));
     }
 
     _handleScreenSelected(item) {
@@ -83,9 +75,9 @@ class DrawerLayout extends Component {
     _renderNavigation() {
         return (
             <View>
-                <Toolbar actions={this.props.actions}>
+                <Toolbar {...this.props}>
                 </Toolbar>
-                <Category />
+                <Category {...this.props} selected={this.state.selected}/>
             </View>
         );
     }

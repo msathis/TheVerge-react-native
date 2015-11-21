@@ -26,7 +26,7 @@ class Toolbar extends Component {
                 title="The Verge"
                 navIcon={require('./img/ic_menu_white_24dp.png')}
                 style={styles.toolbar}
-                onIconClicked={()=>actions.openDrawer()}
+                onIconClicked={()=>dispatch(actions.openDrawer())}
                 >
             </ToolbarAndroid>
         )

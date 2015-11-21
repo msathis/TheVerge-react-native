@@ -3,25 +3,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 
 import Navigation from '../containers/Navigation';
-import Actions from '../actions';
+import * as Actions from '../actions/HomeActions';
 
 @connect(state => ({
-    state: state
+  state
 }))
-class Main extends Component {
+export default class Main extends Component {
 
     constructor(props) {
         super(props)
     }
 
     render() {
-        const { state, dispatch } = this.props;
-        var actions = bindActionCreators(Actions, dispatch);
-
+        let {dispatch} = this.props;
         return (
-            <Navigation state={state} actions={actions}></Navigation>
+            <Navigation {...this.props} actions={Actions}> </Navigation>
         )
     }
 }
-
-export default Main;
