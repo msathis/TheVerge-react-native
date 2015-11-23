@@ -8,12 +8,19 @@ import React, {
     ScrollView,
     View,
 } from 'react-native';
+import { connect } from 'react-redux/native';
 
 import Colors from '../../utilities/Colors';
 import ListItem from './ListItem';
+import Loader from '../common/Loader';
+import NoResults from '../common/NoResults';
+import Types from '../../constants/ActionTypes';
 
 const DEVICE_HEIGHT = (Dimensions.get('window').height) - 60;
 
+@connect(state => ({
+    state: state.postsState
+}))
 export default class Category extends Component {
 
     constructor(props) {
@@ -32,9 +39,12 @@ export default class Category extends Component {
     }
 
     fetchCategoryData() {
-        let {dispatch, selected, actions: {fetchCategory}} = this.props;
-        console.log(selected.url);
-        dispatch(fetchCategory(selected.url));
+        let {dispatch, actions: {fetchCategory}} = this.props;
+        let {selected} = this.props.state;
+        if (this.selectedCategory != selected) {
+            this.selectedCategory = selected;
+            dispatch(fetchCategory(selected));
+        }
     }
 
     onEndReached() {
@@ -46,7 +56,11 @@ export default class Category extends Component {
     }
 
     render() {
-        let {postsState: {posts}} = this.props.state;
+        let {posts, isLoading, status} = this.props.state;
+        if (isLoading)
+            return (<Loader />);
+        else if (posts.length == 0)
+            return (<NoResults />);
         return (
             <ScrollView style={styles.container}>
                 <ListView

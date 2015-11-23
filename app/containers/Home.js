@@ -1,7 +1,7 @@
 import React, { Component } from 'react-native';
 import DrawerLayout from '../components/DrawerLayout';
 
-class Home extends Component {
+export default class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -11,5 +11,3 @@ class Home extends Component {
         return (<DrawerLayout {...this.props} />);
     }
 }
-
-export default Home;

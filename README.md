@@ -1,2 +1,2 @@
 # TheVerge-react-native
-Experimental yet. Not working.
+Experimental project using React native, redux. Serious Work in Progress. :)

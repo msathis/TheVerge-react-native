@@ -1,3 +1,4 @@
 exports.OPEN_DRAWER = 'OPEN_DRAWER';
 
 exports.FETCH_FEED = 'FETCH_FEED';
+exports.FEED_LOADING = 'FEED_LOADING';

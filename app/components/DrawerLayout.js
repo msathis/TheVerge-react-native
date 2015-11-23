@@ -14,7 +14,7 @@ import React, {
     ListView,
     Image,
     Text,
-    TouchableNativeFeedback,
+    TouchableHighlight,
 }
 from 'react-native';
 
@@ -26,17 +26,16 @@ import DrawerHeader from './header/DrawerHeader';
 import Colors from '../utilities/Colors';
 import Categories from '../constants/Categories';
 import Category from './home/Category';
+import Types from '../constants/ActionTypes';
+
 
 var DRAWER_WIDTH_LEFT =  Dimensions.get('window').width  / 4;
 var DEVICE_HEIGHT = require('Dimensions').get('window').height;
 
-class DrawerLayout extends Component {
+export default class DrawerLayout extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            selected: Categories.Home
-        };
         this._handleScreenSelected = this._handleScreenSelected.bind(this);
         this._renderNavigationItem = this._renderNavigationItem.bind(this);
         this._renderNavigationView = this._renderNavigationView.bind(this);
@@ -49,26 +48,29 @@ class DrawerLayout extends Component {
     }
 
     _handleScreenSelected(item) {
-        this.setState({ selected: item});
+        let {dispatch} = this.props;
+        this.selected = item;
+        this.drawer.closeDrawer();
+        dispatch({ type: Types.FEED_LOADING,  selected: item });
     }
 
     _renderNavigationItem(item) {
 
-        var selected = this.state.selected.name;
-
-        var itemStyle = item.name == selected ? [styles.navHolder, styles.active] :  styles.navHolder;
-        var itemTextStle = item.name == selected ? [styles.nav, styles.navTextActive] :  styles.nav;
-        var itemIconStle = item.name == selected ? [styles.navIcon, styles.navIconActive] :  styles.navIcon;
+        let selected = this.props.state.postsState.selected ? this.props.state.postsState.selected.name : '';
+        let itemStyle = item.name == selected ? [styles.navHolder, styles.active] :  styles.navHolder;
+        let itemTextStle = item.name == selected ? [styles.nav, styles.navTextActive] :  styles.nav;
+        let itemIconStle = item.name == selected ? [styles.navIcon, styles.navIconActive] :  styles.navIcon;
 
         return (
-            <TouchableNativeFeedback
-                background={TouchableNativeFeedback.Ripple("#123")}
+            <TouchableHighlight
+                underlayColor={Colors.LightGrey}
+                style={styles.navItem}
                 onPress={() => this._handleScreenSelected(item)}>
                     <View style={itemStyle}>
                         <Image style={itemIconStle} source={item.icon} />
                         <Text numberOfLines={1} style={itemTextStle}>{item.name}</Text>
                     </View>
-            </TouchableNativeFeedback>
+            </TouchableHighlight>
         );
     }
 
@@ -77,7 +79,7 @@ class DrawerLayout extends Component {
             <View>
                 <Toolbar {...this.props}>
                 </Toolbar>
-                <Category {...this.props} selected={this.state.selected}/>
+                <Category {...this.props} />
             </View>
         );
     }
@@ -147,5 +149,3 @@ var styles = StyleSheet.create({
 var dataSource = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });
-
-module.exports = DrawerLayout;

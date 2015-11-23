@@ -1,14 +1,15 @@
 var types = require('../constants/ActionTypes');
 
-function sendPosts(status, data) {
+function sendPosts(status, data, selected) {
     if (status != 200) {
         console.log(data);
         return null;
     }
     return {
         type: types.FETCH_FEED,
-        status: status,
-        data: data
+        status,
+        selected,
+        data
     };
 }
 
@@ -33,13 +34,13 @@ export function closeLoginModal() {
     }
 }
 
-export function fetchCategory(url) {
+export function fetchCategory(selected) {
     return dispatch => {
-        var feed = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=-1&q=' + encodeURIComponent(url);
+        var feed = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=-1&q=' + encodeURIComponent(selected.url);
 
         return fetch(feed)
             .then(response => response.json())
-            .then(json => dispatch(sendPosts(200, json)))
-            .catch(error => dispatch(sendPosts(400, error)))
+            .then(json => dispatch(sendPosts(200, json, selected)))
+            .catch(error => dispatch(sendPosts(400, error, selected)))
     }
 }
