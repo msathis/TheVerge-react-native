@@ -1,8 +1,13 @@
-import React, {Navigator}  from 'react-native';
+import React, {
+    Navigator,
+    BackAndroid
+}  from 'react-native';
 
 // Components
-var Home = require('../containers/Home')
-var sceneConfig = require('./sceneConfig')
+import Home from '../containers/Home';
+import Post from '../containers/Post';
+
+import sceneConfig from './sceneConfig';
 
 
 var customFloatFromRight = sceneConfig.customFloatFromRight
@@ -10,7 +15,15 @@ var customFloatFromRight = sceneConfig.customFloatFromRight
 
 class Router {
     constructor(navigator) {
-        this.navigator = navigator
+        this.navigator = navigator;
+        BackAndroid.addEventListener('hardwareBackPress', function() {
+             let routesLength = this.navigator.getCurrentRoutes().length;
+             if (routesLength > 1) {
+               this.pop();
+               return true;
+             }
+             return false;
+        }.bind(this));
     }
 
     push(props, route) {
@@ -27,10 +40,10 @@ class Router {
     }
 
 
-    toUser(props) {
+    toPost(props) {
         this.push(props, {
-            component: User,
-            name: 'user',
+            component: Post,
+            name: 'post',
             sceneConfig: customFloatFromRight
         })
     }

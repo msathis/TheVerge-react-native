@@ -5,12 +5,12 @@ var { width, height } = Dimensions.get('window');
 
 var baseConfig = Navigator.SceneConfigs.FloatFromRight;
 var popGestureConfig = Object.assign({}, baseConfig.gestures.pop, {
-    edgeHitWidth: width / 3
+    edgeHitWidth: 50
 });
 
 
 var fullPopGestureConfig = Object.assign({}, Navigator.SceneConfigs.FloatFromBottom.gestures.pop, {
-    edgeHitWidth: width
+    edgeHitWidth: 50
 })
 
 

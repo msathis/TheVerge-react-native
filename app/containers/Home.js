@@ -8,6 +8,10 @@ export default class Home extends Component {
     }
 
     render() {
-        return (<DrawerLayout {...this.props} />);
+        return (
+            <DrawerLayout {...this.props}>
+                
+            </DrawerLayout>
+        );
     }
 }

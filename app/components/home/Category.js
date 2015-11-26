@@ -51,8 +51,8 @@ export default class Category extends Component {
 
     }
 
-    renderRow(post) {
-        return (<ListItem post={post} />)
+    renderRow(post, secId, rowId) {
+        return (<ListItem {...this.props} post={post} postIndex={rowId}/>)
     }
 
     render() {
@@ -66,7 +66,7 @@ export default class Category extends Component {
                 <ListView
                     style={styles.navigationList}
                     dataSource={this.dataSource.cloneWithRows(posts)}
-                    renderRow={this.renderRow}
+                    renderRow={this.renderRow.bind(this)}
                     keyboardDismissMode="on-drag"
                     keyboardShouldPersistTaps={true}
                     showsVerticalScrollIndicator={false}

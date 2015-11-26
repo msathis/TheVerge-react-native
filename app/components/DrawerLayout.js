@@ -74,12 +74,21 @@ export default class DrawerLayout extends Component {
         );
     }
 
+    _renderChildren() {
+        let {children} = this.props;
+        if (typeof children != 'string') {
+            return children;
+        }
+        return (<Category {...this.props} />);
+    }
+
     _renderNavigation() {
+
         return (
             <View>
                 <Toolbar {...this.props}>
                 </Toolbar>
-                <Category {...this.props} />
+                {this._renderChildren(this)}
             </View>
         );
     }

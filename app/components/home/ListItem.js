@@ -12,12 +12,11 @@ import React, {
 } from 'react-native';
 
 import Colors from '../../utilities/Colors';
-import HtmlView from 'react-native-htmlview';
 
 const DEVICE_WIDTH =  Dimensions.get('window').width;
 const IMG_HEIGHT = 160;
 
-export default class Category extends Component {
+export default class ListItem extends Component {
 
     constructor(props) {
         super(props);
@@ -37,7 +36,13 @@ export default class Category extends Component {
             }
           });
         }
-      }
+    }
+
+    _handlePostSelected() {
+        let {router, postIndex} = this.props;
+        let {posts} = this.props.state;
+        router.toPost({posts: posts, selectedIndex: postIndex});
+    }
 
     render() {
         let {post} = this.props;
@@ -45,12 +50,15 @@ export default class Category extends Component {
         let image = res && res.length ? (res[1]||res[2]||res[3]) : null;
 
         return (
-            <View {...this.props} style={styles.container}>
+            <View {...this.props} style={styles.container} >
                 <TouchableNativeFeedback
+                    onPress={() => this._handlePostSelected(post)}
                     background={TouchableNativeFeedback.Ripple("#ccc")} >
                     <View>
                         <Text style={styles.storyTitle}> {post.title} </Text>
-                        <Image style={styles.image} source={{uri: image}} onLayout={this.onImageLayout} />
+                        <Image style={styles.image} source={{uri: image}}
+                            defaultSource={require('../img/placeholder.png')}
+                            onLayout={this.onImageLayout} />
                         <Text style={styles.summary}> {post.contentSnippet.trim()} </Text>
                     </View>
                 </TouchableNativeFeedback>
