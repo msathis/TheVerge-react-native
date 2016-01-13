@@ -9,20 +9,21 @@ import React, {
 }
 from 'react-native';
 
-class Toolbar extends Component {
+export default class Toolbar extends Component {
     constructor(props) {
         super(props);
     }
     render() {
-        let {dispatch, actions} = this.props;
+        const {dispatch, navIconClicked, title, type} = this.props;
+        const icon = !type || type === 'home' ? require('./img/ic_menu_white_24dp.png') : require('./img/ic_arrow_back_white_24dp.png')
 
         return (
             <ToolbarAndroid
                 titleColor="#ffffff"
-                title="The Verge"
-                navIcon={require('./img/ic_menu_white_24dp.png')}
+                title={title || "The Verge"}
+                navIcon={icon}
                 style={styles.toolbar}
-                onIconClicked={()=>dispatch(actions.openDrawer())}
+                onIconClicked={()=>navIconClicked()}
                 >
             </ToolbarAndroid>
         )
@@ -37,5 +38,3 @@ var styles = StyleSheet.create({
         height: 56
     },
 });
-
-export default Toolbar;

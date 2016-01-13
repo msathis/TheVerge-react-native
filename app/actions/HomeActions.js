@@ -20,6 +20,13 @@ export function openDrawer() {
     }
 }
 
+export function closeDrawer() {
+    return {
+        type: types.OPEN_DRAWER,
+        isDrawerOpen: false
+    }
+}
+
 export function openLoginModal() {
     return {
         type: types.OPEN_LOGIN_MODAL,
