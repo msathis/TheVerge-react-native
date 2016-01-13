@@ -19,5 +19,5 @@ This is how the app looks like at this moment.
 
 #Todo
     1. iOS implementation
-    ~~2. View Pager for viewing individual news items~~
+    2. ~~ View Pager for viewing individual news items. ~~
     3. AsyncStorage for offline viewing
