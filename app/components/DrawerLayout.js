@@ -18,7 +18,7 @@ import React, {
 }
 from 'react-native';
 
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 
 
 import Toolbar from './Toolbar';

@@ -1,13 +1,10 @@
 import React, { Component } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 
 import Navigation from '../containers/Navigation';
 import * as Actions from '../actions/HomeActions';
 
-@connect(state => ({
-  state
-}))
 export default class Main extends Component {
 
     constructor(props) {
@@ -21,3 +18,9 @@ export default class Main extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {state};
+}
+
+export default connect(mapStateToProps)(Main);

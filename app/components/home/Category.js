@@ -8,7 +8,7 @@ import React, {
     ScrollView,
     View,
 } from 'react-native';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 
 import Colors from '../../utilities/Colors';
 import ListItem from './ListItem';
@@ -18,10 +18,7 @@ import Types from '../../constants/ActionTypes';
 
 const DEVICE_HEIGHT = (Dimensions.get('window').height) - 60;
 
-@connect(state => ({
-    state: state.postsState
-}))
-export default class Category extends Component {
+class Category extends Component {
 
     constructor(props) {
         super(props);
@@ -92,3 +89,12 @@ var styles = StyleSheet.create({
         marginBottom: 20
     }
 });
+
+
+function mapStateToProps(state) {
+    return {
+        state: state.postsState
+    };
+}
+
+export default connect(mapStateToProps)(Category);

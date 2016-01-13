@@ -1,6 +1,6 @@
 import React, { Component } from 'react-native';
 import { createStore, applyMiddleware, combineReducers, bindActionCreators } from 'redux';
-import { Provider } from 'react-redux/native';
+import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import Main from './Main';
 import reducers from '../reducers'
@@ -17,7 +17,7 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                {() => <Main />}
+                <Main />
             </Provider>
         );
     }

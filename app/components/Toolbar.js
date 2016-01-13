@@ -2,17 +2,13 @@
  * Created by mars on 2015/10/11.
  */
 
-var React=require('react-native');
-
-var {
+import React, {
     Component,
     ToolbarAndroid,
     StyleSheet
-    }=React;
+}
+from 'react-native';
 
-import { connect } from 'react-redux/native';
-
-@connect(state => state)
 class Toolbar extends Component {
     constructor(props) {
         super(props);
@@ -42,4 +38,4 @@ var styles = StyleSheet.create({
     },
 });
 
-module.exports = Toolbar;
+export default Toolbar;
