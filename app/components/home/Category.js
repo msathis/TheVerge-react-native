@@ -7,6 +7,7 @@ import React, {
     Dimensions,
     ScrollView,
     View,
+    RefreshControl
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -36,11 +37,12 @@ class Category extends Component {
     }
 
     fetchCategoryData() {
-        let {dispatch, actions: {fetchCategory}} = this.props;
-        let {selected} = this.props.state;
-        if (this.selectedCategory != selected) {
-            this.selectedCategory = selected;
-            dispatch(fetchCategory(selected));
+        let {dispatch, actions: {fetchCategory}} = this.props
+        let {selected} = this.props.state
+        if (this.forceUpdate || this.selectedCategory != selected) {
+            this.selectedCategory = selected
+            this.forceUpdate = false
+            dispatch(fetchCategory(selected))
         }
     }
 
@@ -52,36 +54,41 @@ class Category extends Component {
         return (<ListItem {...this.props} post={post} postIndex={rowId}/>)
     }
 
+    _onRefresh() {
+        this.forceUpdate = true
+        this.setState({ isLoading: true, posts: [] })
+    }
+
     render() {
         let {posts, isLoading, status} = this.props.state;
-        if (isLoading)
-            return (<Loader />);
-        else if (posts.length == 0)
+
+        if (!isLoading && posts.length == 0)
             return (<NoResults />);
         return (
-            <ScrollView style={styles.container}>
                 <ListView
-                    style={styles.navigationList}
+                    style={styles.list}
                     dataSource={this.dataSource.cloneWithRows(posts)}
                     renderRow={this.renderRow.bind(this)}
                     keyboardDismissMode="on-drag"
                     keyboardShouldPersistTaps={true}
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached}
+                    refreshControl={
+                        <RefreshControl
+                          refreshing={isLoading}
+                          onRefresh={this._onRefresh.bind(this)}
+                          title="Loading..." />
+                    }
                 />
-            </ScrollView>
         );
     }
 
 }
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    list: {
+        height: DEVICE_HEIGHT,
         backgroundColor: Colors.MainBackground
-    },
-    navigationList: {
-        height: DEVICE_HEIGHT
     },
     image: {
         height: 100,

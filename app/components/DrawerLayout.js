@@ -40,7 +40,6 @@ export default class DrawerLayout extends Component {
         this._renderNavigationItem = this._renderNavigationItem.bind(this)
         this._renderNavigationView = this._renderNavigationView.bind(this)
         this._setDrawerState = this._setDrawerState.bind(this)
-        this.toggleDrawerState = this.toggleDrawerState.bind(this)
     }
 
     componentDidUpdate() {
@@ -49,9 +48,11 @@ export default class DrawerLayout extends Component {
 
     toggleDrawer() {
         if (this.drawer && !this.isDrawerOpen) {
-            this.drawer.openDrawer();
+            this.drawer.openDrawer()
+            this.isDrawerOpen = true
         } else if (this.drawer){
-            this.drawer.closeDrawer();
+            this.drawer.closeDrawer()
+            this.isDrawerOpen = false
         }
     }
 
@@ -66,9 +67,9 @@ export default class DrawerLayout extends Component {
         this.isDrawerOpen = isDrawerOpen
     }
 
-    toggleDrawerState() {
-        this.isDrawerOpen = !this.isDrawerOpen
-        this.toggleDrawer()
+    openDrawer() {
+        this.isDrawerOpen = true
+        this.drawer.openDrawer()
     }
 
     _renderNavigationItem(item) {
@@ -103,7 +104,7 @@ export default class DrawerLayout extends Component {
 
         return (
             <View>
-                <Toolbar {...this.props} navIconClicked={this.toggleDrawerState}>
+                <Toolbar {...this.props} navIconClicked={this.openDrawer.bind(this)}>
                 </Toolbar>
                 {this._renderChildren()}
             </View>
